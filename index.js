@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $("#alertaIngrediente").hide();
+    $("#alerta").hide();
 
     let buttonCollapse = $("#collapse");
     let containerRecetario = $("#recetario");
@@ -21,10 +21,10 @@ $(document).ready(function() {
     $("#agregarIngrediente").click(function() {
         let ingrediente = $("#ingrediente").val();
         if (ingrediente.trim() === "") {
-            $("#alertaIngrediente").show(250);
+            showAlert("el ingrediente no puede estar vácio.");
             return;
         } else {
-            $("#alertaIngrediente").hide(200);
+            $("#alert").hide(200);
             let html = `<li class="list-group-item">${ingrediente}</li>`;
 
             $("#lista-ingredientes").append(html);
@@ -32,19 +32,62 @@ $(document).ready(function() {
         }
     });
 
-    $("#form-receta").submit(function(e) {
-        e.preventDefault();
+    function showAlert(message) {
+        $("#alerta").text(message);
+        $("#alerta").show(500);
+    }
 
-        /*let nombre = $("#nombre").val();
+    $("#guardar").click(function() {
+        let nombre = $("#nombre").val();
+        if (nombre.trim() === "") {
+            showAlert("el nombre no puede estar vácio.");
+            return;
+        }
+
         let categoria = $("#categoria option:selected")[0].text;
+        if (categoria === "Seleccionar") {
+            showAlert("Selecciona una categoría.");
+            return;
+        }
+
         let imagen = $("#imagen").val();
+        if (imagen.trim() === "") {
+            showAlert("Ingresa una ruta de imagen valida.");
+            return;
+        }
+
+        let arr = document.getElementById('lista-ingredientes').getElementsByTagName('li');
+        var arr2 = [].slice.call(arr);
+        let ingredientes = [];
+
+        arr2.forEach(element => {
+            ingredientes.push(element.innerText);
+        });
+        if (ingredientes.length == 0) {
+            showAlert("Se requiere al menos un ingrediente.");
+            return;
+        }
+
+        let preparacion = $("#preparacion")[0].value;
+        if (preparacion.trim() === "") {
+            showAlert("El campo no puede estar vácio.");
+            return;
+        }
 
         let receta = {
             nombre: nombre,
             categoria: categoria,
             imagen: imagen,
+            ingredientes: ingredientes,
+            preparacion: preparacion,
+            id: Date.now()
         };
 
-        console.log(receta);*/
+        $("#alerta").hide(200);
+        localStorage.setItem(receta.id, JSON.stringify(receta));
+    });
+
+    $("#form-receta").submit(function(e) {
+        e.preventDefault();
     });
 });

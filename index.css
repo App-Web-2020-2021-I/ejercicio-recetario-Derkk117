@@ -1,0 +1,10 @@
+.separador {
+    width: 2px;
+    height: 200px;
+    background-color: black;
+}
+
+.ingrediente {
+    padding: 0;
+    padding-right: 10px;
+}

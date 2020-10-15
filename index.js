@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    $("#alertaIngrediente").hide();
+
     let buttonCollapse = $("#collapse");
     let containerRecetario = $("#recetario");
     let containerAgregar = $("#Agregar");
@@ -16,13 +18,24 @@ $(document).ready(function() {
         }
     });
 
+    $("#agregarIngrediente").click(function() {
+        let ingrediente = $("#ingrediente").val();
+        if (ingrediente.trim() === "") {
+            $("#alertaIngrediente").show(250);
+            return;
+        } else {
+            $("#alertaIngrediente").hide(200);
+            let html = `<li class="list-group-item">${ingrediente}</li>`;
 
-
+            $("#lista-ingredientes").append(html);
+            $("#ingrediente").val("");
+        }
+    });
 
     $("#form-receta").submit(function(e) {
         e.preventDefault();
 
-        let nombre = $("#nombre").val();
+        /*let nombre = $("#nombre").val();
         let categoria = $("#categoria option:selected")[0].text;
         let imagen = $("#imagen").val();
 
@@ -32,6 +45,6 @@ $(document).ready(function() {
             imagen: imagen,
         };
 
-        console.log(receta);
+        console.log(receta);*/
     });
 });

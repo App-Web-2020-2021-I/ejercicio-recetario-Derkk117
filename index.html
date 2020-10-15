@@ -33,20 +33,18 @@
                     <input type="text" id="imagen" class="form-control">
                 </div>
                 <div class="form-group ">
-                    <label class="">Ingredientes</label>
+                    <label>Ingredientes</label>
+                    <div style="height: 70px;" class="text-justify form-control col-12 alert alert-danger col-12" role="alert" id="alertaIngrediente">
+                        El campo no puede estar vácio.
+                    </div>
                     <div class="row d-flex m-auto">
                         <div class="col-10 ingrediente">
-                            <input type="text" class="form-control align-self-center">
+                            <input type="text" class="form-control align-self-center" placeholder="ingrediente" id="ingrediente">
                         </div>
-                        <button class="btn btn-outline-primary col-2 align-self-center">+</button>
+                        <button class="btn btn-outline-primary col-2 align-self-center" id="agregarIngrediente">+</button>
                     </div>
                 </div>
                 <ul class="list-group" id="lista-ingredientes">
-                    <li class="list-group-item">1</li>
-                    <li class="list-group-item">1</li>
-                    <li class="list-group-item">1</li>
-                    <li class="list-group-item">1</li>
-                    <li class="list-group-item">1</li>
                 </ul>
                 <div class="form-group py-2">
                     <label class="">Preparación</label>

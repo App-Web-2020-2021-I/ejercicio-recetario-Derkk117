@@ -25,7 +25,7 @@ $(document).ready(function() {
             return;
         } else {
             $("#alert").hide(200);
-            let html = `<li class="list-group-item">${ingrediente}</li>`;
+            let html = `<li class="list-group-item bg-dark text-white list-group-item-action">${ingrediente}</li>`;
 
             $("#lista-ingredientes").append(html);
             $("#ingrediente").val("");
@@ -74,6 +74,8 @@ $(document).ready(function() {
             return;
         }
 
+        $("#alerta").hide(200);
+
         let receta = {
             nombre: nombre,
             categoria: categoria,
@@ -83,11 +85,53 @@ $(document).ready(function() {
             id: Date.now()
         };
 
-        $("#alerta").hide(200);
         localStorage.setItem(receta.id, JSON.stringify(receta));
+
+        agregarReceta(receta);
+
+        $("#nombre").val("");
+        $("#categoria")[0].selectedIndex = 0;
+        $("#imagen").val("");
+        $("#lista-ingredientes").empty();
+        $("#preparacion")[0].value = "";
     });
+
+    function agregarReceta(data) {
+        let receta = data;
+        let html = `
+        <div class="card d-flex" id="${receta.id}">
+            <div class="card-body"><img src="${receta.imagen}" class="img-fluid" alt=""></div>
+            <div class="card-footer">
+                <h6 class="text-left">${receta.nombre}</h6>
+                <button onclick="verMas(${receta.id})" data-toggle="modal" data-target="#Modalv1">Ver más</button>
+            </div>
+        </div>`;
+        if (receta.categoria === "Principal") {
+            $("#Principal").append(html);
+        } else if (receta.categoria === "Entrada") {
+            $("#Entrada").append(html);
+        } else if (receta.categoria === "Postre") {
+            $("#Postre").append(html);
+        } else {
+            showAlert("Error al agregar al recetario. Categoria no encontrada...");
+        }
+    }
 
     $("#form-receta").submit(function(e) {
         e.preventDefault();
     });
 });
+
+//SandBox 
+function verMas(id) {
+    let receta = JSON.parse(localStorage.getItem(id));
+    $("#Modalv1Title")[0].innerText = receta.nombre;
+    $("#imagenModal")[0].src = receta.imagen;
+    receta.ingredientes.forEach(element => {
+        let html = `
+        <li class="list-group-item bg-dark text-white list-group-item-action">${element}</li>`;
+
+        $("#ingredientesModal").append(html);
+    });
+    $("#preparacionModal")[0].value = receta.preparacion;
+}
